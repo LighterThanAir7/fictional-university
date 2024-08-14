@@ -59,6 +59,14 @@
 - get_post_type_archive_link();
 - get_field();
 - the_field();
+- is_main_query(); (makes sure that query taking place is not custom query)
+- is_admin(); (is in admin panel)
+- is_post_type_archive('type here') (checks if post type is of specified type)
+- paginate_links() (works only on default WP queries that are tied to the current URL or manipulating query, needs different approach for custom queries)
+  - echo paginate_links([
+    'total' => $past_events->max_num_pages,
+    ]);
+- get_query_var(); (get information about current URL)
 
 # TEMPLATE FILES
 
@@ -86,6 +94,7 @@
   - 'title-tag'
 - wp_reset_postdata(); (good habit to use I guess?)
 - init (in add_action)
+- add_action('pre_get_posts', 'university_adjust_queries');
 
 # CUSTOM QUERIES
 - new WP_Query();
@@ -101,3 +110,11 @@
 # PLUGINS
 - Advanced Custom Fields (ACF)
 - CMB2 (Custom Metaboxes 2)
+
+# VERY IMPORTANT TIPS
+- Use custom queries when you want to do something that is NOT related to current behaviour of URL, try to use default query with slight adjustments to it (easier pagination...)
+- When using custom queries it's possible to set up pagination but requires extra steps
+  - echo paginate_links([
+    'total' => $past_events->max_num_pages,
+    ]);
+- Loading css/js is not the same for frontend and admin part, use different hooks wp_admin_enqueue...

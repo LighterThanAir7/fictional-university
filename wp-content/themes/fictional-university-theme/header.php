@@ -39,7 +39,7 @@ echo '
                 $blog_class = ' class="current-menu-item"';
             }
 
-            if (get_post_type() === 'event') {
+            if (get_post_type() === 'event' || is_page('past-events')) {
                 $event_class = ' class="current-menu-item"';
             }
 
@@ -48,7 +48,7 @@ echo '
             <ul>
               <li'.$about_us_class.'><a href="' . site_url('/about-us') . '">About Us</a></li>
               <li><a href="#">Programs</a></li>
-              <li'.$event_class.'><a href="#">Events</a></li>
+              <li'.$event_class.'><a href="'.site_url("/events"),'">Events</a></li>
               <li><a href="#">Campuses</a></li>
               <li'.$blog_class.'><a href="'.site_url("/blog").'">Blog</a></li>
             </ul>

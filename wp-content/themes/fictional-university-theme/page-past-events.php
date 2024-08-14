@@ -31,17 +31,35 @@ echo '
     <div class="page-banner__bg-image" style="background-image: url(' . get_theme_file_uri('/images/ocean.jpg') . ');"></div>
     <div class="page-banner__content container container--narrow">
         <!--<h1 class="page-banner__title">.$title.</h1>-->
-        <h1 class="page-banner__title">All Events</h1>
+        <h1 class="page-banner__title">Past Events</h1>
         <div class="page-banner__intro">
-            <p>See what is going on in our world</p>
+            <p>Recap of our past events.</p>
         </div>
     </div>  
 </div>
 
 <div class="container container--narrow page-section">';
 
-while (have_posts()) {
-    the_post();
+$today = date('Ymd');
+$past_events = new WP_Query([
+    'paged' => get_query_var('paged', 1), // Which page of results should this be, depending on the number in URL, 2nd argument 1 is fallback page number
+    'posts_per_page' => 1,
+    'post_type' => 'event',
+    'meta_key' => 'event_date',
+    'orderby' => 'meta_value_num',
+    'order' => 'ASC',
+    'meta_query' => [
+        [
+            'key' => 'event_date',
+            'compare' => '<=',
+            'value' => $today,
+            'type' => 'DATE' // numeric because we are comparing two numbers, or use DATE
+        ]
+    ]
+]);
+
+while ($past_events->have_posts()) {
+    $past_events->the_post();
     echo '
     <div class="event-summary">
         <a class="event-summary__date t-center" href="'.get_the_permalink().'">
@@ -66,11 +84,11 @@ while (have_posts()) {
     ';
 }
 
-    echo paginate_links();
+echo paginate_links([
+    'total' => $past_events->max_num_pages,
+]);
 
-    echo '
-    <hr class="section-break">
-    <p>Looking for a recap of past events? <a href="'.site_url("/past-events").'">Check our our past events archive.</a></p>
+echo '
 </div>';
 
 get_footer();

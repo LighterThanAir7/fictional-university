@@ -1,9 +1,22 @@
 <?php
 
 // Custom query to get latest 2 posts
+
+$today = date('Ymd');
 $homepage_events = new WP_Query([
-    'posts_per_page' => 2,
-    'post_type' => 'event'
+    'posts_per_page' => 2, // -1 shows all items, we want 2 most rapidly aproaching
+    'post_type' => 'event',
+    'meta_key' => 'event_date',
+    'orderby' => 'meta_value_num', // rand = random, title, post_date, meta_value... if it's number use meta_value_num
+    'order' => 'ASC',
+    'meta_query' => [ // Filter out events which have already happpened = FINE GRAINED CONTROL WITH META QUERIES
+        [
+            'key' => 'event_date',
+            'compare' => '>=',
+            'value' => $today,
+            'type' => 'DATE' // numeric because we are comparing two numbers, or use DATE
+        ]
+    ]
 ]);
 
 if ($homepage_events->have_posts()) {
