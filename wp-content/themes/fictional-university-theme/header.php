@@ -28,6 +28,7 @@ echo '
             $about_us_class = '';
             $blog_class = '';
             $event_class = '';
+            $program_class = '';
             
             // If the current page is "About Us" or a child of "About Us"
             if (is_page('about-us') || wp_get_post_parent_id(0) === 13) {
@@ -43,11 +44,14 @@ echo '
                 $event_class = ' class="current-menu-item"';
             }
 
+            if (get_post_type() === 'program') {
+                $program_class = ' class="current-menu-item"';
+            }
 
             echo '
             <ul>
               <li'.$about_us_class.'><a href="' . site_url('/about-us') . '">About Us</a></li>
-              <li><a href="#">Programs</a></li>
+              <li'.$program_class.'><a href="'.site_url("/programs").'">Programs</a></li>
               <li'.$event_class.'><a href="'.site_url("/events"),'">Events</a></li>
               <li><a href="#">Campuses</a></li>
               <li'.$blog_class.'><a href="'.site_url("/blog").'">Blog</a></li>

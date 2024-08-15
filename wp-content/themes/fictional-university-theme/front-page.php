@@ -11,7 +11,7 @@ echo '
         <h2 class="headline headline--medium">We think you&rsquo;ll like it here.</h2>
         <h3 class="headline headline--small">Why don&rsquo;t you check out the <strong>major</strong> you&rsquo;re
             interested in?</h3>
-        <a href="#" class="btn btn--large btn--blue">Find Your Major</a>
+        <a href="'.get_post_type_archive_link("program").'" class="btn btn--large btn--blue">Find Your Major</a>
     </div>
 </div>
 <div class="full-width-split group">
@@ -73,16 +73,6 @@ echo '
         </div>
         <div class="slider__bullets glide__bullets" data-glide-el="controls[nav]"></div>
     </div>
-</div>
-';
-
-
-/*while (have_posts()) {
-    the_post(); // Keep track of which post we are working with
-    echo '
-        <h2><a href="' . get_the_permalink() . '">' . get_the_title() . '</a></h2>
-        <p>' . get_the_content() . '</p>
-        <hr />';
-}*/
+</div>';
 
 get_footer();

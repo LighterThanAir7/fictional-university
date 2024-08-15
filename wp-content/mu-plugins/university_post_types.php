@@ -2,6 +2,7 @@
 
 function university_post_types (): void
 {
+    // Event post type
     register_post_type('event', [
         'has_archive' => true, // Whatever keyword you register in post_type it's automaticaly a slug unless said otherwise
         'rewrite' => ['slug' => 'events'],
@@ -17,6 +18,24 @@ function university_post_types (): void
             'singular_name' => 'Event',
         ],
         'menu_icon' => 'dashicons-calendar',
+    ]);
+
+    // Program post type
+    register_post_type('program', [
+        'has_archive' => true,
+        'rewrite' => ['slug' => 'programs'],
+        'supports' => ['title', 'editor'],
+        'public' => true,
+        'show_in_rest' => true,
+        'labels' => [
+            'name' => 'Programs',
+            'add_new' => 'Add New Program',
+            'add_new_item' => 'Add New Program',
+            'edit_item' => 'Edit Program',
+            'all_items' => 'All Programs',
+            'singular_name' => 'Program',
+        ],
+        'menu_icon' => 'dashicons-awards',
     ]);
 }
 

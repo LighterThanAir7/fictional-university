@@ -25,9 +25,24 @@ while (have_posts()) {
                 <span class="metabox__main">'.get_the_title().'</span>
             </p>
         </div>
-        <div class="generic-content">
-           ' . get_the_content() . '
-        </div>
+        <div class="generic-content">'.get_the_content().'</div>';
+
+        $related_programs = get_field('related_programs');
+
+        if ($related_programs) {
+            echo '
+            <hr class="section-break">
+            <h3 class="headline headline--medium">Related Programs(s)</h3>
+            <ul class="link-list min-list">';
+
+                foreach ($related_programs as $program) {
+                    echo '<li><a href="'.get_the_permalink($program).'">'.get_the_title($program).'</a></li>';
+                }
+            echo '     
+            </ul>';
+        }
+        echo '
+       
     </div>';
 }
 
