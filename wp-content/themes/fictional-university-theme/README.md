@@ -67,6 +67,10 @@
     'total' => $past_events->max_num_pages,
     ]);
 - get_query_var(); (get information about current URL)
+- wp_reset_postdata();
+- add_theme_support('post-thumbnails');
+- get_the_post_thumbnail();
+- the_post_thumbnail();
 
 # TEMPLATE FILES
 
@@ -110,6 +114,8 @@
 # PLUGINS
 - Advanced Custom Fields (ACF)
 - CMB2 (Custom Metaboxes 2)
+- Manual Image Crop
+- Regenerate Thumbnails
 
 # VERY IMPORTANT TIPS
 - Use custom queries when you want to do something that is NOT related to current behaviour of URL, try to use default query with slight adjustments to it (easier pagination...)
@@ -118,3 +124,5 @@
     'total' => $past_events->max_num_pages,
     ]);
 - Loading css/js is not the same for frontend and admin part, use different hooks wp_admin_enqueue...
+- wp_reset_postdata() (resets global post objects and the returns of functions like get_id, get_title etc.. it resets all of that back to DEFAULT URL BASED QUERY)
+  - so.. whenever you are running multiple custom querries on a single page, you will want to use wp_reset_postdata() between them

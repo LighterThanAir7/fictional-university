@@ -18,6 +18,10 @@ function university_features (): void
     register_nav_menu('footer-menu-one', 'Footer Menu One');
     register_nav_menu('footer-menu-two', 'Footer Menu Two');*/
     add_theme_support('title-tag');
+    add_theme_support('post-thumbnails');
+    add_image_size('professor_landscape', 400, 260, true); // crop values = true, false or array (left/right/center/top/bottom)... combined left top etc..
+    add_image_size('professor_portrait', 480, 650, true);
+    add_image_size('page_banner', 1500, 350, true);
 }
 
 // Generate appropriate title tag for each screen
