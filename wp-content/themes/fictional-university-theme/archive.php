@@ -1,6 +1,10 @@
 <?php
 
 get_header();
+page_banner([
+    'title' => get_the_archive_title(),
+    'subtitle' => get_the_archive_description(),
+]);
 
 // More custom made titles for the archives
 // - using get_the_archive_title(); now for simplicity
@@ -27,17 +31,6 @@ if (is_day()) {
 }
 
 echo '
-<div class="page-banner">
-    <div class="page-banner__bg-image" style="background-image: url(' . get_theme_file_uri('/images/ocean.jpg') . ');"></div>
-    <div class="page-banner__content container container--narrow">
-      <!--<h1 class="page-banner__title">.$title.</h1>-->
-      <h1 class="page-banner__title">'.get_the_archive_title().'</h1>
-      <div class="page-banner__intro">
-        <p>'.get_the_archive_description().'</p>
-      </div>
-    </div>  
-</div>
-
 <div class="container container--narrow page-section">';
 
 while (have_posts()) {

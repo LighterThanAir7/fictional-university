@@ -19,7 +19,29 @@ echo '
         <div class="full-width-split__inner">
             <h2 class="headline headline--small-plus t-center">Upcoming Events</h2>';
 
-            get_template_part("templates/homepage-events");
+            // Custom query to get 2 latest posts
+            $today = date('Ymd');
+            $homepage_events = new WP_Query([
+                'posts_per_page' => 2, // -1 shows all items, we want 2 most rapidly aproaching
+                'post_type' => 'event',
+                'meta_key' => 'event_date',
+                'orderby' => 'meta_value_num', // rand = random, title, post_date, meta_value... if it's number use meta_value_num
+                'order' => 'ASC',
+                'meta_query' => [ // Filter out events which have already happpened = FINE GRAINED CONTROL WITH META QUERIES
+                    [
+                        'key' => 'event_date',
+                        'compare' => '>=',
+                        'value' => $today,
+                        'type' => 'DATE' // numeric because we are comparing two numbers, or use DATE
+                    ]
+                ]
+            ]);
+
+            while ($homepage_events->have_posts()) {
+                $homepage_events->the_post();
+                get_template_part("templates/event");
+                wp_reset_postdata();
+            }
 
             echo '
             <p class="t-center no-margin"><a href="'.get_post_type_archive_link('event').'" class="btn btn--blue">View All Events</a></p>
@@ -29,7 +51,15 @@ echo '
         <div class="full-width-split__inner">
             <h2 class="headline headline--small-plus t-center">From Our Blogs</h2>';
 
-            get_template_part("templates/homepage-posts");
+            // Custom query to get latest 2 posts
+            $homepage_posts = new WP_Query([
+                'posts_per_page' => 2
+            ]);
+
+            while ($homepage_posts->have_posts()) {
+                $homepage_posts->the_post();
+                get_template_part("templates/posts");
+            }
 
             echo '
             <p class="t-center no-margin"><a href="'.site_url("/blog").'" class="btn btn--yellow">View All Blog Posts</a></p>

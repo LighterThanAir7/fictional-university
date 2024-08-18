@@ -1,5 +1,35 @@
 <?php
 
+function page_banner ($args = NULL): void
+{
+    if (!isset($args['title'])) {
+        $args['title'] = get_the_title();
+    }
+
+    if (!isset($args['subtitle'])) {
+        $args['subtitle'] = get_field('page_banner_subtitle');
+    }
+
+    if (!isset($args['image'])) {
+        if (get_field('page_banner_background_image') && !is_archive() && !is_home()) {
+            $args['image'] = get_field('page_banner_background_image')['sizes']['page_banner'];
+        } else {
+            $args['image'] = get_theme_file_uri('/images/ocean.jpg');
+        }
+    }
+
+    echo '
+    <div class="page-banner">
+        <div class="page-banner__bg-image" style="background-image: url('.$args["image"].')"></div>
+        <div class="page-banner__content container container--narrow">
+            <h1 class="page-banner__title">'.$args['title'].'</h1>
+            <div class="page-banner__intro">
+                <p>'.$args['subtitle'].'</p>
+            </div>
+        </div>
+    </div>';
+}
+
 function university_files (): void
 {
     wp_enqueue_script('main-university-js', get_theme_file_uri('/build/index.js'), array('jquery'), '1.0', true);
