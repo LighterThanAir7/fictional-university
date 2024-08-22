@@ -42,7 +42,7 @@ while (have_posts()) {
                 echo '
                 <li class="professor-card__list-item">
                     <a class="professor-card" href="'.get_the_permalink().'">
-                        <img class="professor-card__image" src="'.get_the_post_thumbnail_url(null, 'professor_landscape').'" alt="">
+                        <img class="professor-card__image" src="'.esc_url(get_the_post_thumbnail_url( null, 'professor_landscape')).'" alt="">
                         <span class="professor-card__name">'.get_the_title().'</span>
                     </a>
                 </li>
@@ -86,6 +86,25 @@ while (have_posts()) {
                 get_template_part('templates/event');
             }
         }
+
+
+        wp_reset_postdata(); // clean slate...
+        $related_campuses = get_field('related_campuses');
+
+        if ($related_campuses) {
+            echo '<hr class="section-break">';
+            echo '<h3 class="headline headline--medium">'.get_the_title().' is Available At These Campuses:</h3>';
+
+            echo '<ul class="min-list link-list">';
+            foreach ($related_campuses as $campus) {
+                ?>
+                <li>
+                    <a href="<?php echo get_the_permalink($campus) ?>"><?php echo get_the_title($campus) ?></a>
+                </li><?php
+            }
+            echo '</ul>';
+        }
+
     echo '
     </div>';
 }
